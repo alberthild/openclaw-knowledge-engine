@@ -34,6 +34,16 @@ export class FactStore {
   }
 
   /**
+   * Immediately flushes any pending debounced writes.
+   * Useful in tests and before shutdown to ensure data is persisted.
+   */
+  public async flush(): Promise<void> {
+    if (this.isLoaded) {
+      await this.persist();
+    }
+  }
+
+  /**
    * Loads facts from the `facts.json` file into the in-memory store.
    * If the file doesn't exist, it initializes an empty store.
    */

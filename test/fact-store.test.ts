@@ -23,6 +23,11 @@ describe('FactStore', () => {
   after(async () => await fs.rm(testDir, { recursive: true, force: true }));
 
   beforeEach(async () => {
+    // Flush any pending debounced writes from the previous test
+    // to prevent stale data from bleeding across test boundaries.
+    if (factStore) {
+      await factStore.flush();
+    }
     const filePath = path.join(testDir, 'facts.json');
     try { await fs.unlink(filePath); } catch (e: unknown) {
       if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e;

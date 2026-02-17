@@ -98,7 +98,8 @@ export class HookManager {
     if (this.llmEnhancer) {
       const messageId = `msg-${Date.now()}`;
       this.llmEnhancer.addToBatch({ id: messageId, text });
-      this.processLlmBatchWhenReady();
+      this.processLlmBatchWhenReady().catch(err =>
+        this.logger.error('LLM batch processing failed', err as Error));
     }
   }
 
