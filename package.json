@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-repo/openclaw-knowledge-engine.git"
+    "url": "https://github.com/alberthild/openclaw-knowledge-engine.git"
   },
   "openclaw": {
     "id": "@vainplex/openclaw-knowledge-engine"
