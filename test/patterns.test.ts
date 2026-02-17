@@ -111,11 +111,11 @@ describe('REGEX_PATTERNS', () => {
   
   it('should match organization names with suffixes', () => {
     const testCases: TestCase[] = [
-        ['He works at Vainplex GmbH.', 'Vainplex GmbH'],
+        ['He works at Acme GmbH.', 'Acme GmbH'],
         ['The owner of Stark Industries, LLC is Tony Stark.', 'Stark Industries, LLC'],
         ['Globex Corp. is another example.', 'Globex Corp.'],
         ['This also catches Acme Inc. and Cyberdyne Systems Ltd.', ['Acme Inc.', 'Cyberdyne Systems Ltd.']],
-        ['No match for Vainplex alone', null],
+        ['No match for Acme alone', null],
     ];
     runTestCases(REGEX_PATTERNS.organization_suffix, testCases);
   });

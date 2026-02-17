@@ -14,11 +14,11 @@ Every message your OpenClaw agent processes flows through the Knowledge Engine:
 6. **Background Maintenance** — Prunes low-relevance facts, compacts storage, runs cleanup
 
 ```
-User: "We're meeting with Sebastian from Mondo Gate next Tuesday"
+User: "We're meeting with Alex from Acme Corp next Tuesday"
   │
-  ├─ Regex → entities: [Sebastian (person), Mondo Gate (organization)]
-  └─ LLM   → facts:   [Sebastian — works-at — Mondo Gate]
-                       [Meeting — scheduled-with — Mondo Gate]
+  ├─ Regex → entities: [Alex (person), Acme Corp (organization)]
+  └─ LLM   → facts:   [Alex — works-at — Acme Corp]
+                       [Meeting — scheduled-with — Acme Corp]
 ```
 
 ## Quick Start
@@ -167,9 +167,9 @@ Facts are stored as structured triples:
 ```json
 {
   "id": "f-abc123",
-  "subject": "Sebastian",
+  "subject": "Alex",
   "predicate": "works-at",
-  "object": "Mondo Gate",
+  "object": "Acme Corp",
   "source": "extracted-llm",
   "relevance": 0.95,
   "createdAt": 1707123456789,
@@ -235,7 +235,7 @@ npm test
 
 Tests cover: config validation, entity extraction, fact CRUD, decay, pruning, LLM batching, HTTP client, embeddings, storage atomicity, maintenance scheduling, hook orchestration.
 
-## Part of the Darkplex Plugin Suite
+## Part of the Vainplex Plugin Suite
 
 | # | Plugin | Status | Description |
 |---|--------|--------|-------------|

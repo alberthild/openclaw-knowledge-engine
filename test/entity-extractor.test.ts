@@ -34,12 +34,12 @@ describe('EntityExtractor', () => {
     });
 
     it('should extract multiple different entities', () => {
-      const text = 'Contact Atlas via atlas@vainplex.com on 2026-02-17.';
+      const text = 'Contact Atlas via atlas@acme.com on 2026-02-17.';
       const entities = extractor.extract(text);
       assert.strictEqual(entities.length, 3); // Atlas (proper_noun), email, date
       
       const names = entities.map(e => e.value).sort();
-      assert.deepStrictEqual(names, ['2026-02-17', 'Atlas', 'atlas@vainplex.com']);
+      assert.deepStrictEqual(names, ['2026-02-17', 'Atlas', 'atlas@acme.com']);
     });
 
     it('should handle multiple mentions of the same entity', () => {
@@ -54,14 +54,14 @@ describe('EntityExtractor', () => {
     });
 
     it('should correctly identify and canonicalize an organization', () => {
-      const text = 'I work for Vainplex GmbH. It is a German company.';
+      const text = 'I work for Acme GmbH. It is a German company.';
       const entities = extractor.extract(text);
       const orgEntity = entities.find(e => e.type === 'organization');
       
       assert.ok(orgEntity, 'Organization entity should be found');
-      assert.strictEqual(orgEntity.value, 'Vainplex'); // Canonicalized
-      assert.strictEqual(orgEntity.id, 'organization:vainplex');
-      assert.deepStrictEqual(orgEntity.mentions, ['Vainplex GmbH']);
+      assert.strictEqual(orgEntity.value, 'Acme'); // Canonicalized
+      assert.strictEqual(orgEntity.id, 'organization:acme');
+      assert.deepStrictEqual(orgEntity.mentions, ['Acme GmbH']);
     });
 
     it('should extract dates in various formats', () => {
@@ -84,7 +84,7 @@ describe('EntityExtractor', () => {
   describe('mergeEntities', () => {
     it('should merge two disjoint lists of entities', () => {
       const listA: Entity[] = [{ id: 'person:claude', type: 'person', value: 'Claude', count: 1, importance: 0.7, lastSeen: '2026-01-01', mentions: ['Claude'], source: ['regex'] }];
-      const listB: Entity[] = [{ id: 'org:vainplex', type: 'organization', value: 'Vainplex', count: 1, importance: 0.8, lastSeen: '2026-01-01', mentions: ['Vainplex'], source: ['llm'] }];
+      const listB: Entity[] = [{ id: 'org:acme', type: 'organization', value: 'Acme', count: 1, importance: 0.8, lastSeen: '2026-01-01', mentions: ['Acme'], source: ['llm'] }];
       
       const merged = EntityExtractor.mergeEntities(listA, listB);
       assert.strictEqual(merged.length, 2);
