@@ -1,38 +1,39 @@
-// index.ts
+// index.ts — OpenClaw Plugin Entry Point
 
 import { resolveConfig } from './src/config.js';
 import { HookManager } from './src/hooks.js';
 import type { OpenClawPluginApi } from './src/types.js';
 
-// The main entry point for the OpenClaw plugin.
-// This function is called by the OpenClaw host during plugin loading.
-export default (api: OpenClawPluginApi, context: { workspace: string }): void => {
-  const { pluginConfig, logger } = api;
-  const { workspace: openClawWorkspace } = context;
+const plugin = {
+  id: 'openclaw-knowledge-engine',
+  name: 'OpenClaw Knowledge Engine',
+  description: 'Real-time knowledge extraction — entities, facts, and relationships from conversations',
+  version: '0.1.2',
 
-  // 1. Resolve and validate the configuration
-  const config = resolveConfig(pluginConfig, logger, openClawWorkspace);
+  register(api: OpenClawPluginApi): void {
+    const { pluginConfig, logger } = api;
 
-  if (!config) {
-    logger.error('Failed to initialize Knowledge Engine: Invalid configuration. The plugin will be disabled.');
-    return;
-  }
+    // 1. Resolve and validate the configuration
+    const config = resolveConfig(pluginConfig, logger);
+    if (!config) {
+      logger.error('Knowledge Engine: Invalid configuration — plugin disabled.');
+      return;
+    }
+    if (!config.enabled) {
+      logger.info('[knowledge-engine] Disabled via config');
+      return;
+    }
 
-  if (!config.enabled) {
-    logger.info('Knowledge Engine is disabled in the configuration.');
-    return;
-  }
-
-  // 2. Initialize the Hook Manager with the resolved config
-  try {
-    const hookManager = new HookManager(api, config);
-    
-    // 3. Register all the event hooks
-    hookManager.registerHooks();
-
-    logger.info('Knowledge Engine plugin initialized successfully.');
-    
-  } catch (err) {
-    logger.error('An unexpected error occurred during Knowledge Engine initialization.', err as Error);
-  }
+    // 2. Initialize the Hook Manager and register hooks
+    try {
+      logger.info('[knowledge-engine] Registering hooks...');
+      const hookManager = new HookManager(api, config);
+      hookManager.registerHooks();
+      logger.info('[knowledge-engine] Ready');
+    } catch (err) {
+      logger.error('[knowledge-engine] Failed to initialize', err as Error);
+    }
+  },
 };
+
+export default plugin;

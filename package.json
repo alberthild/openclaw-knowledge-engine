@@ -24,7 +24,10 @@
     "url": "https://github.com/alberthild/openclaw-knowledge-engine.git"
   },
   "openclaw": {
-    "id": "@vainplex/openclaw-knowledge-engine"
+    "id": "openclaw-knowledge-engine",
+    "extensions": [
+      "./dist/index.js"
+    ]
   },
   "devDependencies": {
     "@types/node": "^20.11.24",

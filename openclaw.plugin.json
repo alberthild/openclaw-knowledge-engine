@@ -1,6 +1,6 @@
 {
-  "id": "@vainplex/openclaw-knowledge-engine",
-  "config": {
+  "id": "openclaw-knowledge-engine",
+  "configSchema": {
     "enabled": {
       "type": "boolean",
       "default": true,

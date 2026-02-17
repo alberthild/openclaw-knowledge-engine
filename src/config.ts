@@ -95,12 +95,13 @@ function resolveTilde(ws: string, logger: Logger, fallback: string): string {
  * @returns A fully resolved KnowledgeConfig, or null if validation fails.
  */
 export function resolveConfig(
-  userConfig: Record<string, unknown>,
+  userConfig: Record<string, unknown> | undefined | null,
   logger: Logger,
-  openClawWorkspace: string
+  openClawWorkspace?: string
 ): KnowledgeConfig | null {
-  const config = mergeConfigDefaults(userConfig, openClawWorkspace);
-  const fallbackWs = path.join(openClawWorkspace, 'knowledge-engine');
+  const ws = openClawWorkspace ?? process.cwd();
+  const config = mergeConfigDefaults(userConfig ?? {}, ws);
+  const fallbackWs = path.join(ws, 'knowledge-engine');
   config.workspace = resolveTilde(config.workspace, logger, fallbackWs);
 
   const errors = validateConfig(config);
