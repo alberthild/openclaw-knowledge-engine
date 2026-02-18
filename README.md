@@ -1,3 +1,7 @@
+> **📦 This plugin is part of the [Vainplex OpenClaw Suite](https://github.com/alberthild/vainplex-openclaw)** — a collection of five production plugins that turn OpenClaw into a self-governing, learning system. See the monorepo for the full picture.
+
+---
+
 # @vainplex/openclaw-knowledge-engine
 
 A real-time knowledge extraction plugin for [OpenClaw](https://github.com/openclaw/openclaw). Automatically extracts entities, facts, and relationships from conversations — building a persistent, queryable knowledge base that grows with every message.
